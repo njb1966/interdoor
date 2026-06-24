@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>InterDOOR — Federated Terminal Game Network</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --black:   #000;
+  --bg:      #0c0c0c;
+  --grey:    #555;
+  --muted:   #888;
+  --text:    #bbb;
+  --white:   #fff;
+  --yellow:  #ffff55;
+  --cyan:    #55ffff;
+  --green:   #55ff55;
+  --red:     #ff5555;
+  --blue:    #5555ff;
+  --dim-blue:#2222aa;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 2.5rem 1.5rem 5rem;
+}
+
+.page { max-width: 720px; margin: 0 auto; }
+
+a { color: var(--cyan); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ── header ── */
+.site-name {
+  font-size: 2.2rem;
+  letter-spacing: 0.3em;
+  color: var(--yellow);
+  text-shadow: 0 0 18px rgba(255,255,85,0.45), 0 0 4px rgba(255,255,85,0.7);
+  margin-bottom: 0.3rem;
+}
+.site-sub {
+  color: var(--grey);
+  font-size: 0.85rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 2.5rem;
+}
+
+/* ── rules ── */
+.rule {
+  border: none;
+  border-top: 1px solid #222;
+  margin: 2.5rem 0;
+}
+
+/* ── section labels ── */
+h2 {
+  color: var(--grey);
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+/* ── terminal window mockup ── */
+.term-window {
+  border: 1px solid #333;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 40px rgba(0,0,0,0.8);
+}
+
+.term-bar {
+  background: #1a1a1a;
+  border-bottom: 1px solid #2a2a2a;
+  padding: 0.45rem 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: var(--grey);
+  user-select: none;
+}
+
+.term-dots { display: flex; gap: 5px; }
+.term-dots span {
+  width: 11px; height: 11px;
+  border-radius: 50%;
+  display: block;
+}
+.dot-r { background: #c0392b; }
+.dot-y { background: #e67e22; }
+.dot-g { background: #27ae60; }
+
+.term-title { flex: 1; text-align: center; }
+
+.term-screen {
+  background: #000;
+  padding: 0 0 0.5rem;
+  overflow-x: auto;
+}
+
+/* ── hub portal pre block ── */
+.hub-pre {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11.5px;
+  line-height: 1.3;
+  white-space: pre;
+  padding: 0.6rem 0.8rem 0.4rem;
+  margin: 0;
+}
+
+/* hub portal colors */
+.hc-blue   { color: #3a3aaa; }
+.hc-yellow { color: var(--yellow); }
+.hc-dyel   { color: #aa8800; }
+.hc-white  { color: var(--white); }
+.hc-cyan   { color: var(--cyan); }
+.hc-green  { color: var(--green); }
+.hc-grey   { color: #666; }
+
+/* blinking cursor */
+.cur {
+  display: inline-block;
+  width: 0.55ch;
+  height: 1em;
+  background: #bbb;
+  vertical-align: text-bottom;
+  animation: blink 1.1s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ── connect command ── */
+.connect-block {
+  background: #000;
+  border: 1px solid #333;
+  border-left: 3px solid var(--cyan);
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.75rem;
+}
+.connect-cmd {
+  color: var(--cyan);
+  font-size: 1.05rem;
+  margin-bottom: 0.4rem;
+}
+.connect-cmd::before { content: "$ "; color: var(--grey); }
+.connect-note { color: var(--grey); font-size: 0.82rem; }
+
+/* ── node directory table ── */
+.dir-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+.dir-table th {
+  text-align: left;
+  color: var(--grey);
+  font-weight: normal;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0 0.5rem 0.4rem;
+  border-bottom: 1px solid #222;
+}
+.dir-table td {
+  padding: 0.45rem 0.5rem;
+  border-bottom: 1px solid #181818;
+  vertical-align: middle;
+}
+.dir-table tr:last-child td { border-bottom: none; }
+.dir-table .t-node { color: var(--white); }
+.dir-table .t-game { color: var(--text); }
+.dir-table .t-addr { color: var(--cyan); font-size: 0.8rem; }
+.dir-table .t-plrs { color: var(--yellow); }
+.dir-table .t-stat { font-size: 0.75rem; }
+.online-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  margin-right: 0.3em;
+  vertical-align: middle;
+}
+.online-dot.on  { background: var(--green); box-shadow: 0 0 5px var(--green); }
+.online-dot.off { background: var(--grey); }
+
+/* ── info paragraphs ── */
+.info { color: var(--text); line-height: 1.7; margin-bottom: 1rem; }
+.info + .info { margin-top: -0.3rem; }
+
+/* ── token steps ── */
+ol.steps { list-style: none; counter-reset: s; }
+ol.steps li {
+  counter-increment: s;
+  padding: 0.3rem 0 0.3rem 2rem;
+  position: relative;
+  color: var(--text);
+}
+ol.steps li::before {
+  content: counter(s) ".";
+  position: absolute;
+  left: 0;
+  color: var(--grey);
+}
+
+/* ── footer prompt ── */
+.footer-rule {
+  border: none;
+  border-top: 1px solid var(--dim-blue);
+  margin: 3rem 0 0.4rem;
+}
+.footer-prompt { color: var(--white); font-size: 0.9rem; }
+.footer-links { margin-top: 0.5rem; font-size: 0.75rem; color: var(--grey); }
+.footer-links a { color: var(--grey); }
+.footer-links a:hover { color: var(--text); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── header ── -->
+  <div class="site-name">INTERDOOR</div>
+  <div class="site-sub">Federated Terminal Game Network</div>
+
+  <!-- ── hub portal mockup ── -->
+  <h2>The Hub Portal</h2>
+  <div class="term-window">
+    <div class="term-bar">
+      <div class="term-dots">
+        <span class="dot-r"></span>
+        <span class="dot-y"></span>
+        <span class="dot-g"></span>
+      </div>
+      <div class="term-title">ssh -p 2300 hub.interdoor.net</div>
+    </div>
+    <div class="term-screen">
+<pre class="hub-pre"><span class="hc-blue">────────────────────────────────────────────────────────────────────────────────</span>
+
+<span class="hc-dyel">              ─▄─  ▄──▄  ─▄─  ▄──▄  ▄──▄  ▄──▄   ▄──▄  ▄──▄  ▄──▄</span>
+<span class="hc-green">               █   █  █   █   █─    █─▄▀  █  ▐▌  █  █  █  █  █─▄▀</span>
+<span class="hc-green">              ─▀─  ▀  ▀   ▀   ▀──▀  ▀  ▀  ▀──▀   ▀──▀  ▀──▀  ▀  ▀</span>
+
+
+<span class="hc-white">                   Federated Terminal Game Network</span><span class="hc-cyan">   hub.interdoor.net</span>
+<span class="hc-blue">────────────────────────────────────────────────────────────────────────────────</span>
+
+  <span class="hc-green">1 node online</span>  <span class="hc-grey">·  5 events indexed</span>
+
+<span class="hc-grey">  #    NODE              GAME                   ADDRESS                  PLAYERS</span>
+<span class="hc-blue">  ───  ────────────────  ─────────────────────  ───────────────────────  ───────</span>
+  <span class="hc-white">[1]</span>  thelow            Ledger of the Low      node.interdoor.net:2323  1
+
+
+
+<span class="hc-grey">  [1-9] Connect  ·  [R] Refresh  ·  [Q] Quit</span>
+  Select: <span class="cur"></span></pre>
+    </div>
+  </div>
+  <p class="info" style="color:var(--grey);font-size:0.82rem">
+    The hub is the network's front door. Browse nodes, see who's online, press a number
+    to get the connect command for that game. Runs in any SSH client with no setup.
+    Each node defines its own game and its own look — this screen is the hub itself.
+  </p>
+
+  <hr class="rule">
+
+  <!-- ── connect ── -->
+  <h2>Connect</h2>
+  <div class="connect-block">
+    <div class="connect-cmd">ssh -p 2300 hub.interdoor.net</div>
+    <div class="connect-note">Browse the network. Press 1&ndash;9 to get the connect command for any node.</div>
+  </div>
+  <div class="connect-block" style="border-left-color:var(--grey);margin-top:-0.25rem">
+    <div class="connect-cmd" style="color:var(--text)">ssh -p 2323 node.interdoor.net</div>
+    <div class="connect-note">Connect directly to the reference node. Create an account at the prompt &mdash; no form, no email.</div>
+  </div>
+
+  <hr class="rule">
+
+  <!-- ── about ── -->
+  <h2>What This Is</h2>
+  <p class="info">
+    InterDOOR is a hub-and-spoke network of SSH game servers. Each node is independent —
+    its own binary, its own SQLite database, its own players. But they all speak to a
+    shared hub, which gives you:
+  </p>
+  <p class="info">
+    &nbsp;&nbsp;Cross-node roster — see who's playing on other servers right now.<br>
+    &nbsp;&nbsp;Cross-node PvP — attack players on other nodes. They fight back.<br>
+    &nbsp;&nbsp;Travel — move your character to another node and play there a while.<br>
+    &nbsp;&nbsp;Obligation ledger — debts accrue and replicate across the network.
+  </p>
+  <p class="info">
+    The reference game, <strong style="color:var(--white)">Ledger of the Low: The Old Bargain</strong>, ships with the node binary.
+    Think Legend of the Red Dragon without the dragons: twelve actions a day, a shared
+    leaderboard, and an economy that runs on scavenged goods and outstanding debts.
+    The network is the product. The game is the demonstration.
+  </p>
+
+  <hr class="rule">
+
+  <!-- ── live directory ── -->
+  <h2>Node Directory <span style="color:var(--green);font-size:0.9em">&#9679; live</span></h2>
+  <table class="dir-table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Node</th>
+        <th>Game</th>
+        <th>Address</th>
+        <th>Players</th>
+      </tr>
+    </thead>
+    <tbody id="dir-body">
+      <tr><td colspan="5" style="color:var(--grey);padding:0.75rem 0.5rem">Loading&hellip;</td></tr>
+    </tbody>
+  </table>
+
+  <hr class="rule">
+
+  <!-- ── run a node ── -->
+  <h2>Run a Node</h2>
+  <p class="info">
+    The node binary is statically compiled — no runtime, no database server, no Docker.
+    Drop it on any Linux box and it runs. The SSH host key generates on first start.
+    Player accounts are stored in a local SQLite file. Standalone mode needs nothing
+    else; federation just adds a config key and a registration token.
+  </p>
+  <p class="info">
+    To join the public network, you need a registration token from the hub operator.
+    The process:
+  </p>
+  <ol class="steps">
+    <li>Download the binary and run it in standalone mode. Confirm it works.</li>
+    <li>Open a <a href="https://github.com/njb1966/interdoor/issues/new?title=Node+registration+request&body=Node+ID%3A+%0APublic+SSH+address%3A+">GitHub issue</a> with your proposed node ID and public SSH address.</li>
+    <li>Token arrives by return. Add it to your config file and restart.</li>
+  </ol>
+  <p class="info" style="margin-top:1rem">
+    Full sysop guide: <a href="https://github.com/njb1966/interdoor/blob/main/files/SYSOP_GUIDE.md">github.com/njb1966/interdoor &rarr; files/SYSOP_GUIDE.md</a>
+  </p>
+
+  <!-- ── footer ── -->
+  <hr class="footer-rule">
+  <div class="footer-prompt">What now, Wanderer?:&nbsp;<span class="cur"></span></div>
+  <div class="footer-links">
+    <a href="/v1/directory">directory JSON</a> &nbsp;&middot;&nbsp;
+    <a href="/v1/status">status JSON</a> &nbsp;&middot;&nbsp;
+    <a href="https://github.com/njb1966/interdoor">source</a>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  function esc(s) {
+    return String(s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  fetch('/v1/directory')
+    .then(function(r){ return r.json(); })
+    .then(function(data){
+      var nodes = (data.nodes||[]).slice();
+      var tbody = document.getElementById('dir-body');
+
+      if (!nodes.length) {
+        tbody.innerHTML = '<tr><td colspan="5" style="color:var(--grey);padding:0.75rem 0.5rem">No nodes registered yet.</td></tr>';
+        return;
+      }
+
+      nodes.sort(function(a,b){
+        if (a.online!==b.online) return a.online?-1:1;
+        return a.node_id<b.node_id?-1:1;
+      });
+
+      tbody.innerHTML = nodes.map(function(n){
+        var addr = (n.advertise_addr||'').replace(/^ssh:\/\//,'');
+        var game = (n.game_id||'—').replace(/_/g,' ');
+        var dot  = '<span class="online-dot '+(n.online?'on':'off')+'"></span>';
+        var plrs = n.online ? '<span class="t-plrs">'+n.player_count+'</span>' : '<span style="color:var(--grey)">—</span>';
+        return '<tr>'
+          +'<td class="t-stat">'+dot+(n.online?'<span style="color:var(--green)">online</span>':'<span style="color:var(--grey)">offline</span>')+'</td>'
+          +'<td class="t-node">'+esc(n.node_id)+'</td>'
+          +'<td class="t-game">'+esc(game)+'</td>'
+          +'<td class="t-addr">'+esc(addr)+'</td>'
+          +'<td>'+plrs+'</td>'
+          +'</tr>';
+      }).join('');
+    })
+    .catch(function(){
+      document.getElementById('dir-body').innerHTML =
+        '<tr><td colspan="5" style="color:var(--red);padding:0.75rem 0.5rem">Directory unavailable.</td></tr>';
+    });
+})();
+</script>
+
+</body>
+</html>

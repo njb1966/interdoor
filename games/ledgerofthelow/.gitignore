@@ -1,0 +1,9 @@
+interdoor.db
+hostkey
+/cmd/node/node
+*.db
+*.db-*
+/bin/
+/dist/
+*.hostkey
+*.key

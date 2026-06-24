@@ -1,0 +1,152 @@
+'DOMINION CONFIGURATION FILE
+'The Values In This Configuration File Are The Default Values I Set For
+'Dominion. If You Change Any Of These Setting And Can't Remember The
+'Original Values Copy CONFIG.BAQ To CONFIG.DOM.
+'
+'To Comment Something Use ['] And The Program Will Skip It.
+'Please Use ~ Around The Values Because It's Just Easier To Look At And
+'Code Into The Program. Thanks.
+'
+'I thought it would be better to make it so that if you give new players
+'something like 1 Mega Human and the player doesn't have the technology to
+'build more that would make it a bit of a harder game. That way the new
+'player has to use their given supplies wisely
+'
+'Most Of The Values Are An Integer Type Value, But Some Are ~T~rue Or ~F~alse
+'
+'You !!!MUST!!! not change the order of the values or else the game might
+'get a little screwy. Imagine a new empire with 20000 anti matter missles!
+'
+'=-=-=-=-=-=-=-=-=-=-=-=- Start of Configuration File -=-=-=-=-=-=-=-=-=-=-=-=
+~15~                    'Number Of Turns The Player Gets Each Day.
+'
+'These Variables Control What New Players Start With
+'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+~10000~                 'Money
+~0~                     'Money In Bank
+~20000~                 'Population
+~10000~                 'Food
+~300~                   'Energy
+~100~                   'Normal Soldiers
+~0~                     'GAHumand Soldiers
+~0~                     'SuperHuman Soldiers
+~0~                     'HyperHuman Soldiers
+~0~                     'MegaHuman Soldiers
+~0~                     'Basic BioBot Upgraded Soldiers
+~0~                     'Standard BioBot Upgraded Soldiers
+~0~                     'Advanced BioBot Upgraded Soldiers
+~0~                     'Advanced 2 BioBot UPgraded Soldiers
+~0~                     'Battle BioBot Upgraded Soldiers
+~0~                     'HeavyAttack BioBot Upgraded Soldiers
+~0~                     'Omega BioBot Upgraded Soldiers
+~0~                     'Omega 2 BioBot Upgraded Soldiers
+'
+'This Part Sets What Ballistic Weapons A New Player Gets
+'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+~0~                     'Food Destroying Missles
+~0~                     'Nuclear Missles
+~0~                     'Radiation Missles
+~0~                     'Population Bombs
+~0~                     'HypnoBombs
+~0~                     'AntiMatter Missles
+'
+'This Part Set What Recon Drones A New Player Gets
+'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+~5~                     'Level 1 Recon Drone
+~0~                     'Level 2 Recon Drone
+~0~                     'Level 3 Recon Drone
+'
+'This Part Sets What Attack Vechicals A New Player Gets
+'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+~0~                     'Tanks
+~0~                     'Hover Crafts
+~0~                     'Jets
+'
+'This Part Defines What Defense Measures A New Player Gets
+'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+~10~                    '# of Defense Satillites
+~F~                     'Does The Player Have The NetWorking Software?
+~0~                     'Global Shield Generators
+~10~                    '# of Ground Turrets
+~0~                     '# of Anti AirCraft Missle Launchers
+~F~                     'Does The Player Have The DoomsDay Weapon?
+'
+'This Part Defines What Technology A New Player Starts With
+'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+~F~                     'Hydro Power Technology
+~F~                     'Wind Power Technology
+~F~                     'Solar Power Technology
+~T~                     'Fossil Fuel Technology
+~F~                     'Fission Power Technology
+~F~                     'Fusion Power Technology
+~F~                     'Cold Fusion Power Technology
+'     -=-=-WAR TECHNOLOGY-=-=-
+~T~                     'Normal Human Soldier Technology
+~F~                     'GA Human Soldier Technology
+~F~                     'SuperHuman Soldier Technology
+~F~                     'HyperHuman Soldier Technology
+~F~                     'MegaHuman Soldier Technology
+'     -=-=BIOBOT TECHNOLOGY-=-=-
+~F~                     'Basic BioBot Technology
+~F~                     'Standard BioBot Technology
+~F~                     'Advanced BioBot Technology
+~F~                     'Advanced L2 BioBot Technology
+~F~                     'Battle BioBot Technology
+~F~                     'Heavy Attack BioBot Technology
+~F~                     'Omega BioBot Technology
+~F~                     'Omega BioBot L2 Technology
+'     -=-=-DRONE TECHNOLOGY=-=-=-=
+~T~                     'Level 1 Drone Technology
+~F~                     'Level 2 Drone Technology
+~F~                     'Level 3 Drone Technology
+'     -=-=-War Vehical Technology=-=-=-=-=-=
+~F~                     'Tank Technology
+~F~                     'Hover Craft Technology
+~F~                     'Jet Technology
+'     -=-=-=Ballistic Weapon Technology-=-=-=-
+~F~                     'Nuclear Bomb Technology
+~F~                     'Radiation Bomb Technology
+~F~                     'HypnoBomb Technology
+~F~                     'Population Bomb Technology
+~F~                     'Food Destroying Bomb Technology
+~F~                     'Anti-Matter Bomb Technology
+'     -=-=-=Global Defence System Technology=-=-
+~F~                     'Orbital Satillite Technology
+~F~                     'Oribital Satillite NetWorking Technology
+~F~                     'Ground Turret Technology
+~F~                     'Anti-Aircraft Missle Launcher Technology
+~F~                     'Global Shield Generator Technology
+~F~                     'Dooms Day Bomb Technology
+'
+'This Defines What Misc Structures The Player Has Built
+'Use "T" for True and "F" for False.
+'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+~F~                     'Does The Player Have The Miners Guild?
+~0~                     'Miners A New Player Gets
+~F~                     'Does The Player Have Fishers Guild?
+~0~                     'Fishers A New Player Gets
+~0~                     'Total Fish Stocks A New Player Can Fish
+~1~                     'Construction Factories A New Player Gets
+~2~                     'Research Labs A New Player Gets
+~F~                     'Does The Player Have The Intelligence Building?
+~0~                     'Number Of Spies A New Player Gets
+~0~                     'Number Of Terrorists A New Player Gets
+~F~                     'Does The Player Have The Lottery Company Built?
+'
+'This Part Defines How Many Of Each Type Of Mine A Player Gets
+'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+~1~                     'Gold Mines
+~1~                     'Silver Mines
+~1~                     'Iron Mines
+~0~                     'Copper Mines
+~0~                     'Nickel Mines
+'
+'This Part Defines How Many Of Each Region A New Player Gets
+'-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+~10~                    'Agricultural Regions
+~1~                     'Industrial Regions
+~0~                     'Desert Regions
+~0~                     'Urban Regions
+~0~                     'River Regions
+~0~                     'Ocean/Sea Regions
+~0~                     'Wastelands

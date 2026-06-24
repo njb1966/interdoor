@@ -1,0 +1,22 @@
+# Build outputs
+/games/ledgerofthelow/bin/
+/games/ledgerofthelow/dist/
+/games/ledgerofthelow/hub
+/games/ledgerofthelow/node
+/games/ledgerofthelow/interdoor-*
+
+# Runtime state and secrets
+*.db
+*.sqlite
+*.hostkey
+hostkey
+
+# Local assistant/tool state
+.agents/
+.claude/
+**/.claude/
+**/.git-local/
+
+# Quarantined generated artifacts
+/games/empireascendant/dominion/quarantine/*/artifacts/bin/
+/games/empireascendant/dominion/quarantine/*/artifacts/dist/

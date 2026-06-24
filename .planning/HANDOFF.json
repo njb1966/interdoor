@@ -1,0 +1,235 @@
+{
+  "version": "1.0",
+  "timestamp": "2026-06-24T12:38:25-05:00",
+  "context": "phase",
+  "phase": "phase-1",
+  "phase_name": "InterDoor federated network framework",
+  "phase_dir": ".planning",
+  "status": "phase_1_hardening_complete",
+  "completed_tasks": [
+    {
+      "id": 1,
+      "name": "Quarantine faulty Dominion/Empire Ascendant implementation",
+      "status": "done",
+      "details": "Moved active Dominion source and local artifacts out of games/ledgerofthelow into games/empireascendant/dominion/quarantine/2026-06-24-faulty-implementation and removed Dominion Makefile targets."
+    },
+    {
+      "id": 2,
+      "name": "Continuous test hardening rule",
+      "status": "done",
+      "details": "Updated 01_Project_Rules.md and 09_Testing.md so federation/security/protocol/queue fixes require regression tests or documented exceptions."
+    },
+    {
+      "id": 3,
+      "name": "Local hub operator tooling",
+      "status": "done",
+      "details": "Added cmd/hubadmin with nodes, node-suspend, node-activate, node-remove, queues, backup, rotate-key, token-issue, and token-revoke commands."
+    },
+    {
+      "id": 4,
+      "name": "Hub suspension semantics",
+      "status": "done",
+      "details": "Made nodes.status='active' required for public directory/status visibility and authenticated hub endpoints. Added hub regression test."
+    },
+    {
+      "id": 5,
+      "name": "Protocol/spec cleanup",
+      "status": "done",
+      "details": "Documented structured error shape, event cursor rules, unpaginated list limits, standard event payload fields, roster shape, stale roster rules, PvP/travel payload shapes."
+    },
+    {
+      "id": 6,
+      "name": "Legacy documentation quarantine",
+      "status": "done",
+      "details": "Added historical/source-material warnings to legacy game docs and README indexes in docs/ and games/ledgerofthelow/files/. Deferred game-node framework extraction until a second approved game exists."
+    },
+    {
+      "id": 7,
+      "name": "Hub-admin regression tests",
+      "status": "done",
+      "details": "Added tests for node-removal dry-run/execute behavior, queue filtering, backup creation and file mode, API-key rotation, and registration-token issue/revoke."
+    },
+    {
+      "id": 8,
+      "name": "Standard event schema validation",
+      "status": "done",
+      "details": "Hub now rejects malformed Phase 1 standard events before they enter the feed. Reference emitters were updated to include required standard fields."
+    },
+    {
+      "id": 9,
+      "name": "Stale roster display coverage",
+      "status": "done",
+      "details": "Reference game wanderers display now labels stale remote roster entries after the documented 15-minute freshness window and has tests."
+    },
+    {
+      "id": 10,
+      "name": "Root systemd documentation",
+      "status": "done",
+      "details": "Added Debian/systemd examples for node and hub to 02_Architecture.md, corrected against the current binary flags and node config behavior."
+    },
+    {
+      "id": 11,
+      "name": "Hub-admin audit logging",
+      "status": "done",
+      "details": "Database-backed mutating hub-admin commands now write non-secret audit rows. Tests verify dry-runs do not create audit rows."
+    },
+    {
+      "id": 12,
+      "name": "Backup restore-readback test",
+      "status": "done",
+      "details": "Hub-admin backup tests now reopen the copied SQLite database and verify representative node, PvP, and travel rows."
+    },
+    {
+      "id": 13,
+      "name": "Non-Go Tier 1 and Tier 2 examples",
+      "status": "done",
+      "details": "Added games/sdk/tier1_http.md and games/sdk/tier2_http.md for non-Go register/heartbeat/event/roster flows."
+    },
+    {
+      "id": 14,
+      "name": "Blocked queue lifecycle",
+      "status": "done",
+      "details": "Implemented owner-scoped blocked states for malformed non-retryable PvP and travel queue payloads, including hub endpoints, syncer reporting, admin queue visibility, queue-retry, tests, and docs."
+    },
+    {
+      "id": 15,
+      "name": "Deployed-shape E2E hardening tests",
+      "status": "done",
+      "details": "Added federation E2E coverage that runs a real hub process against SQLite and verifies reconnect replay after hub restart, cross-node debt.adjusted, duplicate travel rejection, return-home travel, and traveling-player status."
+    },
+    {
+      "id": 16,
+      "name": "Automated raw HTTP conformance coverage",
+      "status": "done",
+      "details": "Added raw HTTP Tier 1/Tier 2 conformance coverage that exercises the protocol without using the Go federation client."
+    },
+    {
+      "id": 17,
+      "name": "Production-style backup restore rehearsal",
+      "status": "done",
+      "details": "Copied the real contabo2 hub DB through SQLite .backup, opened a restored local copy with the current hub binary, verified status/directory/admin queue readback, and removed temporary DB copies afterward."
+    },
+    {
+      "id": 18,
+      "name": "Deploy production hub admin CLI",
+      "status": "done",
+      "details": "Installed /usr/local/bin/interdoor-hub-admin on contabo2 as root:root 0755. Verified checksum, read-only nodes/queues, dry-run node-suspend thelow, and no audit row creation. Hub service was not restarted."
+    },
+    {
+      "id": 19,
+      "name": "Upgrade production hub binary and schema",
+      "status": "done",
+      "details": "Backed up the production hub DB and old hub binary, installed the current interdoor-hub binary on contabo2, restarted interdoor-hub.service, verified public health/directory, migrated queue error/updated_at columns, and queue-retry schema path."
+    },
+    {
+      "id": 20,
+      "name": "Clarify hub portal node detail wording",
+      "status": "done",
+      "details": "Updated the SSH portal detail screen to state that the hub lists nodes and does not launch game sessions, then show 'Open a new terminal and run:' with the node SSH command. Deployed to contabo2 and verified public health."
+    },
+    {
+      "id": 21,
+      "name": "Add human-readable game title display metadata",
+      "status": "done",
+      "details": "Added optional game_title metadata while preserving game_id as the stable compatibility identifier. Updated hub schema, directory JSON, SSH portal display, federation registration client, hub-admin node-title command, tests, SDK/protocol docs, and deployed the hub/admin update to contabo2. Production thelow now displays Ledger of the Low while retaining game_id=ledger_of_the_low."
+    },
+    {
+      "id": 22,
+      "name": "Update InterDOOR hub portal logo and landing page mockup",
+      "status": "done",
+      "details": "Moved the approved compact ANSI graphic to the InterDOOR hub portal only, preserving the 9-line hub header layout and Federated Terminal Game Network hub.interdoor.net tag. Restored Ledger game banner scope, added hub logo layout tests, deployed the new hub binary to contabo2, and updated the static hub.interdoor.net landing page mockup."
+    },
+    {
+      "id": 23,
+      "name": "Final documented Phase 1 hardening pass",
+      "status": "done",
+      "details": "Added remote-roster partition cache coverage, updated root docs to record Phase 1 closeout status for the current small-network deployment, accepted SQLite for Phase 1 under documented operating rules, reran local tests/build/doc checks, and completed deployed hub acceptance checks including online backup/readback."
+    }
+  ],
+  "remaining_tasks": [
+    {
+      "id": 1,
+      "name": "Consider broader deployed-node coverage",
+      "status": "not_started",
+      "details": "Only needed if Phase 1 requires E2E tests that run full node SSH binaries instead of a real hub process with real node stores."
+    },
+    {
+      "id": 2,
+      "name": "Consider result/event audit linkage",
+      "status": "not_started",
+      "details": "Add traceability for PvP completions and debt projection changes if operators need per-event audit lookup before Phase 2."
+    }
+  ],
+  "decisions": [
+    {
+      "decision": "Empire Ascendant/Dominion remains Phase 2 or later",
+      "rationale": "The earlier implementation was faulty and not approved Phase 1 work. Future work requires design review from the original Dominion material before coding."
+    },
+    {
+      "decision": "CLI-first hub administration",
+      "rationale": "Local CLI fits Phase 1's Debian/static-binary/simple-ops model and avoids exposing a network admin surface."
+    },
+    {
+      "decision": "Do not extract a generic game-node framework from Ledger alone",
+      "rationale": "Only one approved game node exists. Framework guidance should wait until Ledger and a second approved game can be compared."
+    },
+    {
+      "decision": "Suspended nodes cannot authenticate",
+      "rationale": "A suspend state that only hides public directory entries would be unsafe for compromised or faulty nodes."
+    },
+    {
+      "decision": "Blocked queue lifecycle is owner-scoped",
+      "rationale": "Transient resolver/import failures stay pending for retry. Only victim or destination nodes may mark malformed non-retryable payloads blocked, and only local operators may reset them to pending after repair."
+    },
+    {
+      "decision": "SQLite is accepted for the current Phase 1 public hub deployment",
+      "rationale": "The documented deployment shape is a small network with local-only administration and low write volume. Backups must use online backup or service-aware copy procedures, and restore/readback drills remain required hardening."
+    }
+  ],
+  "blockers": [],
+  "human_actions_pending": [
+    {
+      "action": "Approve Phase 2 design scope before implementation",
+      "context": "Phase 1 hardening is complete for the current documented deployment shape. Empire Ascendant/Dominion remains Phase 2 and must be designed/reviewed before coding.",
+      "blocking": false
+    }
+  ],
+  "verification": [
+    "go test ./internal/fed from games/ledgerofthelow passed after adding remote-roster partition cache coverage",
+    "go test ./... from games/ledgerofthelow passed",
+    "make build from games/ledgerofthelow passed",
+    "git diff --check -- . passed",
+    "Focused tests passed for ./cmd/hubadmin, ./internal/hub, ./internal/fed, and ./internal/game",
+    "find confirmed root canonical docs, prompts, and placeholder game README files exist",
+    "find confirmed no active cmd/dominion, internal/dominion, or interdoor-dominion artifacts under games/ledgerofthelow",
+    "Markdown local-link scan found only valid local .md links",
+    "Production-style restore rehearsal on copied contabo2 hub DB passed: restored hub status events_total=5, nodes_total=1, nodes_online=1, directory contained only thelow, queues were empty",
+    "Temporary production DB copies created for the restore drill were removed locally and remotely",
+    "Production interdoor-hub-admin installed on contabo2 with checksum abeac585803a6850c391a968fc4848049be2da1645adbd83b3022ef1a9e64b49",
+    "Production admin nodes/queues read-only checks passed; dry-run node-suspend thelow left node active and created no audit rows",
+    "Production interdoor-hub upgraded on contabo2 with checksum 2bd7227f324a1d4d500540b7d1c54e6fb6e9c1eb63497ca3d1a323f77230aa2f",
+    "Production hub service active after restart; public status/directory healthy with only thelow",
+    "Production queue schema includes error and updated_at columns for both pvp_requests and travel",
+    "Rollback assets preserved: /var/lib/interdoor-hub/hub.db.pre-hub-upgrade-20260624-1039.bak and /usr/local/bin/interdoor-hub.pre-upgrade-20260624-1039",
+    "Portal wording update deployed with checksum a4c32a2233f6f3418abaf39058b430046b65e48ef50e445174c5d02da34dfbf2; rollback binary preserved at /usr/local/bin/interdoor-hub.pre-portal-copy-20260624-1059",
+    "Game title display update deployed on contabo2: interdoor-hub checksum db066171a43b949ab09e1307fa48419e008a66bda4b15ae65aca1e01f1c04991, interdoor-hub-admin checksum 9c0d01e219866cafddbcb7f98cffe61dfeb775deb0fb10030d95039ad1b6996c",
+    "Production nodes.game_title migration present; hub-admin node-title set thelow game_title to Ledger of the Low while preserving game_id=ledger_of_the_low",
+    "Public /v1/directory returns thelow with game_title=Ledger of the Low and game_id=ledger_of_the_low; /v1/status remains healthy with one online node",
+    "Game title rollback assets preserved: /usr/local/bin/interdoor-hub.pre-game-title-20260624-1125, /usr/local/bin/interdoor-hub-admin.pre-game-title-20260624-1125, /var/lib/interdoor-hub/hub.db.pre-game-title-20260624-1125.bak",
+    "Hub portal logo update deployed on contabo2: interdoor-hub checksum af233619ccbb08ed3a3809ac151eed647b49a28e7edd4130ca329aecca1c9d35; rollback binary /usr/local/bin/interdoor-hub.pre-logo-preview-20260624-1214",
+    "Live ssh -p 2300 hub.interdoor.net showed the approved compact ANSI graphic on the InterDOOR hub portal directory screen",
+    "Static hub.interdoor.net landing page updated at /var/www/html/hub.interdoor.net/public_html/index.html; rollback file /var/www/html/hub.interdoor.net/public_html/index.html.pre-logo-preview-20260624-1214",
+    "HTTPS page content verified from contabo2 and contains the compact ANSI graphic plus Ledger of the Low display row",
+    "Final acceptance /v1/status returned events_total=5, nodes_total=1, nodes_online=1",
+    "Final acceptance /v1/directory listed only active node thelow with game_title=Ledger of the Low",
+    "Final acceptance interdoor-hub-admin nodes/queues checks passed on contabo2; queues were empty",
+    "Final acceptance dry-run node-suspend thelow and node-remove thelow reported intended scoped changes and did not mutate production",
+    "Final acceptance backup/readback wrote /tmp/interdoor-hub-20260624-acceptance-final.db on contabo2 with mode 0600 and read active thelow from the copy; the temporary copy was removed afterward and ls confirmed it no longer exists",
+    "Root docs now state no known critical Phase 1 production blocker remains for the current small-network deployment shape, and no documented Phase 1 production blocker lacks automated coverage"
+  ],
+  "background_processes": [],
+  "async_jobs": [],
+  "uncommitted_files_note": "InterDoor appears as an untracked directory from the parent git repository. No WIP commit was created to avoid touching unrelated parent-repo state.",
+  "next_action": "Read .planning/.continue-here.md and the root numbered docs. Do not begin Phase 2 implementation until the user approves the Empire Ascendant design scope.",
+  "context_notes": "User values strict Phase 1 focus, documentation as source of truth, explicit approval before game implementation, and incremental Debian-friendly operations."
+}
